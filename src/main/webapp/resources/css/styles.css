@@ -1,0 +1,263 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated:  2010-09-17
+Author:  Richard Clark - http: //richclarkdesign.com
+Twitter:  @rich_clark
+*/
+
+html, body, div, span {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+html, body {
+	background: none repeat scroll 0 0 #EDEDED;
+}
+
+body {
+	line-height: 1;
+}
+
+nav ul, nav li {
+	list-style: none;
+	margin: 0;
+	text-align: right;
+}
+
+a {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+img, object, embed {
+	max-width:100%;
+}
+
+/* for font sizing percentages developer.yahoo.com/yui/3/cssfonts */
+body {
+	font:13px/1.231 sans-serif;
+	*font-size:small;
+} /* hack retained to preserve specificity */
+
+
+a, a:active, a:visited {
+	color: #607890;
+	text-decoration: none;
+	border-bottom: 1px solid #607890;
+}
+
+a:hover {
+	color: #036;
+}
+
+ul, ol { margin-left: 1.8em; }
+ol { list-style-type: decimal; }
+
+small { font-size: 85%; }
+strong, th { font-weight: bold; }
+
+td, td img { vertical-align: top; }
+
+.small-word {
+	font-family: times, serif;
+	font-style: italic;
+	font-weight: normal;
+}
+
+.container,
+#home header[role=banner] hgroup {
+	width: 960px;
+	margin-left:  auto;
+	margin-right: auto;
+}
+
+header[role=banner] nav#secondary {
+	background: #eee;
+	border-bottom: 0;
+	text-align: right;
+}
+
+header[role=banner] nav#secondary li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+header[role=banner] nav {
+	width: 100%;
+	padding: 16px 0;
+	background: #ccc;
+	border-bottom: 3px solid #bbb;
+}
+
+header[role=banner] h1,
+header[role=banner] h2 {
+	font-size: 18px;
+	height: 16px;
+	margin: 0;
+}
+
+header[role=banner] h1 a {
+	border-bottom: none;
+}
+
+header[role=banner] h1,
+header[role=banner] h2 {
+	color: #666;
+}
+
+header[role=banner] h1 a {
+	color: black;
+	font-weight: bold;
+}
+
+header[role=banner] h2 {
+	color: #444;
+	font-size: 100%;
+	text-align: right;
+}
+
+header[role="banner"] nav#secondary li a {
+	margin-left: .5em;
+	display: inline-block;
+	color: black;
+}
+
+header[role="banner"] nav#secondary li a:hover {
+	color: #67CDF1;
+	border-bottom: 1px solid #67CDF1;
+}
+
+#home nav {
+	overflow: hidden;
+}
+
+#home header[role=banner] {
+	background: none;
+}
+
+#home header[role=banner] h2 {
+	font-size: 20px;
+	color: #666;
+	height: auto;
+	margin: -15px 0 0 275px;
+	padding: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-type: normal;
+}
+
+#home header[role=banner] h1 {
+	background: url(../images/cloud_foundry_logo-1.png);
+	text-indent: -999em;
+	font-size: 750%;
+	display: block;
+	color: black;
+	font-weight: bold;
+	height: 115px;
+	margin-top: 20px;
+	padding: 0;
+	text-shadow: 0 0 15px rgba(72,184,234,.75);
+}
+
+nav li {
+	text-align: right;
+}
+
+nav li a {
+	text-align: left;
+}
+
+section .input-text {
+	background: none no-repeat scroll 195px 6px #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px 3px 3px 3px;
+	color: #999999;
+	font-size: 13px;
+	padding: 4px 20px 5px 3px;
+	width: 190px;
+}
+
+#login {
+	width: 400px;
+	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.login-submit {
+	border: solid 1px;
+	background: #636062;
+	width: 100px;
+	height: 30px;
+	font-size: 12px;
+	color: #FFFFFF;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.focusField {
+	border:solid 2px #73A6FF;
+	background:#EFF5FF;
+	color:#000;
+	font-size: larger;
+	width: 400px;
+	height: 32px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-bottom: 10px;
+}
+
+.idleField {
+	background:#EEE;
+	color: #6F6F6F;
+	border: solid 2px #DFDFDF;
+	font-size: larger;
+	width: 400px;
+	height: 32px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-bottom: 10px;
+}
+
+#intro {
+	color: #333333;
+	font-size: 150%;
+	letter-spacing: -0.05em;
+	margin-top: 1em;
+	padding: 1em 0;
+	text-align: center;
+}
+
+#target {
+	color: #333333;
+	font-size: 120%;
+	font-style: italic;
+	letter-spacing: -0.05em;
+	text-align: center;
+}
+
+#signOut {
+	color: #333333;
+	font-size: 15px;
+	cursor: pointer;
+	letter-spacing: -0.05em;
+	text-align: center;
+}
+
+.grid {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.footer {
+	margin-top: 30px;
+}

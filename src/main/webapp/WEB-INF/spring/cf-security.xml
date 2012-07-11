@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<security:http pattern="/resources/**" security="none" />
+
+	<security:http use-expressions="true">
+		<security:intercept-url pattern="/" access="permitAll" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+
+		<security:form-login
+			authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailureHanlder"
+			login-page="/"
+			login-processing-url="/j_security_check" />
+		<security:logout logout-url="/logout" />
+	</security:http>
+
+	<bean name="loginSuccessHandler" class="com.vmware.cf.auth.cloudcontroller.LoginSuccessHandler" />
+	<bean name="loginFailureHanlder" class="com.vmware.cf.auth.cloudcontroller.LoginFailureHandler" />
+
+	<security:authentication-manager>
+		<security:authentication-provider ref="cloudControllerAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean name="cloudControllerAuthenticationProvider" class="com.vmware.cf.auth.cloudcontroller.CloudControllerAuthenticationProvider">
+		<constructor-arg value="http://api.cloudfoundry.com" />
+	</bean>
+
+</beans>
