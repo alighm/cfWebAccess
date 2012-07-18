@@ -190,6 +190,7 @@
 					<source>${java-version}</source>
 					<target>${java-version}</target>
 				</configuration>
+				<version>2.3.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -197,6 +198,7 @@
 				<configuration>
 					<warName>cfWebAccess</warName>
 				</configuration>
+				<version>2.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -217,6 +219,34 @@
 				<version>2.5</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.searls</groupId>
+				<artifactId>jasmine-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<debug>false</debug>
+					<specRunnerTemplate>REQUIRE_JS</specRunnerTemplate>
+					<jsSrcDir>${project.basedir}/src/main/webapp/resources/js</jsSrcDir>
+					<jsTestSrcDir>${project.basedir}/src/test/js</jsTestSrcDir>
+					<customRunnerConfiguration>${project.basedir}/src/test/resources/customJasmineConfig.txt</customRunnerConfiguration>
+					<srcDirectoryName>js</srcDirectoryName>
+					<specDirectoryName>specs</specDirectoryName>
+					<scriptLoaderPath>libs/require/require.js</scriptLoaderPath>
+					<preloadSources>
+						<source>libs/require/require.js</source>
+					</preloadSources>
+					<specIncludes>
+						<include>*Test.js</include>
+					</specIncludes>
 				</configuration>
 			</plugin>
 			<plugin>
