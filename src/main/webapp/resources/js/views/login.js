@@ -54,6 +54,7 @@ define([
 		loginSubmit: function(ev) {
 			var appView, self = this;
 
+			Ext.getBody().mask("loading...");
 			$.post("j_security_check",
 				{ j_username: this.email.val(), j_password: this.password.val() },
 				function(data) {

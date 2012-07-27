@@ -5,6 +5,7 @@ define([
 	'text!templates/app.html'
 	], function($, _, Backbone, appTemplate) {
 	var AppView = Backbone.View.extend({
+
 		el: $("#main"),
 
 		appTemplate: _.template(appTemplate),
@@ -35,7 +36,18 @@ define([
 
 			// editing cell plugin
 			this.cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
-				clicksToEdit: 1
+				clicksToEdit: 1,
+				listeners : {
+					'edit': function(editor, e) {
+						if (e.field == "instances") {
+							Ext.getBody().mask("Modifying Instance...");
+							$.get("updateInstance/" + e.record.get('name') + "/" + e.value, function() {
+								e.grid.store.load();
+								Ext.getBody().unmask();
+							});
+						}
+					}
+				}
 			});
 
 			this.grid = Ext.create('Ext.grid.Panel', {
@@ -82,6 +94,7 @@ define([
 						xtype: 'numberfield',
 						selectOnTab: true,
 						allowBlank: false,
+						step: 1,
 						minValue: 1,
 						maxValue: 19
 					}
@@ -122,7 +135,38 @@ define([
 					renderer: function(value) {
 						return (value == 'STARTED') ? '<center><img src="resources/images/stop.png" /></center>':
 							'<center><img src="resources/images/play.png" /></center>';
+					},
+					listeners : {
+						'click' : function(t, el, rowIndex) {
+							Ext.getBody().mask("Please wait...");
+							var app = t.getStore().getAt(rowIndex);
+							if ("STARTED" == app.get('state')) {
+								$.get("stopApp/" + app.get('name'), function(data) {
+									if (data.status) {
+										t.store.load();
+										Ext.getBody().unmask();
+										Ext.example.msg('Success', data.message);
+									} else {
+										Ext.getBody().unmask();
+										Ext.example.msg('Failed', data.message);
+									}
+								});
+							} else {
+								$.get("startApp/" + app.get('name'), function(data) {
+									if (data.status) {
+										t.store.load();
+										Ext.getBody().unmask();
+										Ext.example.msg('Success', data.message);
+									} else {
+										Ext.getBody().unmask();
+										Ext.example.msg('Failed', data.message);
+									}
+
+								});
+							}
+						}
 					}
+
 				},{
 					text: "Services",
 					dataIndex: "services",
@@ -148,6 +192,14 @@ define([
 			});
 			this.store.load();
 		},
+
+//		stopApp: function(appName) {
+//			console.log("STOPPING " + app.get('name'));
+//		},
+
+//		startApp: function(appName) {
+//			console.log("STARTING" + app.get('name'));
+//		},
 
 		render: function() {
 			$(this.el).html(this.appTemplate({}));
