@@ -41,6 +41,11 @@ public class HomeController {
 		return "home";
 	}
 
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public String newHome() {
+		return "new";
+	}	
+
 	@RequestMapping(value = "/getApps",  method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> getApps() throws MalformedURLException {

@@ -12,6 +12,7 @@
 
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" />
+		<security:intercept-url pattern="/new" access="permitAll" />
 		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
 		<security:form-login
