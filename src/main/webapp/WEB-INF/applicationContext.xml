@@ -16,4 +16,17 @@
 		<property name="principal" value="#{request.userPrincipal}" />
 		<property name="cloudControllerUrl" value="http://api.cloudfoundry.com" />
 	</bean>
+
+	<bean id="appDirectRestTemplate" class="org.springframework.security.oauth.consumer.client.OAuthRestTemplate">
+		<constructor-arg ref="baseProtectedResourceDetails"/>
+	</bean>
+
+	<bean id="baseProtectedResourceDetails" class="org.springframework.security.oauth.consumer.BaseProtectedResourceDetails">
+		<property name="consumerKey" value="cloud-foundry-web-access-4714" />
+		<property name="sharedSecret">
+			<bean class="org.springframework.security.oauth.common.signature.SharedConsumerSecretImpl">
+				<constructor-arg value="UbpGj6Afk6mI3al5" />
+			</bean>
+		</property>
+	</bean>
 </beans>

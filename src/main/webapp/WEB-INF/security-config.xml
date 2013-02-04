@@ -2,36 +2,86 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/security/oauth
+		http://www.springframework.org/schema/security/spring-security-oauth-1.0.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
+	<security:authentication-manager alias="openIDAuthenticationManager" />
 	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/favicon**" security="none" />
 
-	<security:http use-expressions="true">
+	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" />
-		<security:intercept-url pattern="/new" access="permitAll" />
 		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
-		<security:form-login
-			authentication-success-handler-ref="loginSuccessHandler"
-			authentication-failure-handler-ref="loginFailureHanlder"
-			login-page="/"
-			login-processing-url="/j_security_check" />
-		<security:logout logout-url="/logout" />
+		<!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
+		<security:openid-login 
+			user-service-ref="customUserDetailsService"
+			login-page="/" 
+			authentication-failure-url="/" 
+			default-target-url="/">
+				<security:attribute-exchange identifier-match="https://www.google.com/.*">
+					<security:openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true" />
+					<security:openid-attribute name="firstName" type="http://axschema.org/namePerson/first" required="true" />
+					<security:openid-attribute name="lastName" type="http://axschema.org/namePerson/last" required="true" />
+				</security:attribute-exchange>
+		</security:openid-login>
+
+		<security:logout logout-url="/logout" /> 
 	</security:http>
+
+<!-- 	<oauth:provider consumer-details-service-ref="consumerDetails"
+		token-services-ref="tokenServices"
+		request-token-url="/oauth/request_token"
+		authenticate-token-url="/oauth/authorize"
+		user-approval-url="/oauth/confirm_access"
+		access-granted-url="/request_token_authorized.jsp"
+		access-token-url="/oauth/access_token"
+		require10a="false"/>
+
+	<oauth:consumer-details-service id="consumerDetails">
+		<oauth:consumer name="appdirect" key="cloud-foundry-web-access-4722" secret="Gge0K4x4o6pDvpvs" resourceName="Subscribtions" resourceDescription="Subscribtions to Appdirect"/>
+	</oauth:consumer-details-service>
+
+	<oauth:token-services id="tokenServices"/> -->
+
+<!-- 	<oauth:consumer resource-details-service-ref="consumerDetails" oauth-failure-page="/oauth_error.jsp">
+		<oauth:url pattern="/market/**" resources="appdirect"/>
+	</oauth:consumer>
+
+	<oauth:consumer-details-service id="consumerDetails">
+		<oauth:consumer name="appdirect" key="cloud-foundry-web-access-4714" secret="UbpGj6Afk6mI3al5" requiredToObtainAuthenticatedToken="false"/>
+	</oauth:consumer-details-service>
+-->
+
+<!-- 	<oauth:resource-details-service id="resourceDetails">
+		<oauth:resource id="appdirect"
+			key="cloud-foundry-web-access-4714"
+			secret="UbpGj6Afk6mI3al5"
+			request-token-url="https://www.appdirect.com/rest/api/events"
+			user-authorization-url="https://www.appdirect.com/rest/api/events"
+			access-token-url="https://www.appdirect.com/rest/api/events"/>
+	</oauth:resource-details-service> -->
 
 	<bean name="loginSuccessHandler" class="com.vmware.cf.auth.cloudcontroller.LoginSuccessHandler" />
 	<bean name="loginFailureHanlder" class="com.vmware.cf.auth.cloudcontroller.LoginFailureHandler" />
 
-	<security:authentication-manager>
-		<security:authentication-provider ref="cloudControllerAuthenticationProvider" />
-	</security:authentication-manager>
-
-	<bean name="cloudControllerAuthenticationProvider" class="com.vmware.cf.auth.cloudcontroller.CloudControllerAuthenticationProvider">
+	<bean name="customUserDetailsService" class="com.vmware.cf.auth.cloudcontroller.CustomUserDetailsService">
 		<constructor-arg value="http://api.cloudfoundry.com" />
 	</bean>
+
+<!-- 
+ 	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService" />
+	</security:authentication-manager> -->
+
+<!-- 	<bean name="cloudControllerAuthenticationProvider" class="com.vmware.cf.auth.cloudcontroller.CloudControllerAuthenticationProvider">
+		<constructor-arg value="http://api.cloudfoundry.com" />
+	</bean> -->
 
 </beans>
