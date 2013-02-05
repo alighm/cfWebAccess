@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth.consumer.client.OAuthRestTemplate;
 import org.springframework.stereotype.Controller;
